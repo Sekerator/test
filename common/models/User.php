@@ -22,6 +22,8 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ *
+ * @property Lesson[] $lessons
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -219,5 +221,16 @@ class User extends ActiveRecord implements IdentityInterface
     public function getUserLessons()
     {
         return $this->hasMany(UserLesson::class, ['lesson_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Lessons]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLessons()
+    {
+        return $this->hasMany(Lesson::class, ['id' => 'lesson_id'])
+            ->viaTable('user_lesson', ['user_id' => 'id']);
     }
 }

@@ -78,11 +78,7 @@ class LessonController extends Controller
                     $users = User::find()->all();
                     foreach ($users as $user)
                     {
-                        $userLessonModel = new UserLesson();
-                        $userLessonModel->user_id = $user->id;
-                        $userLessonModel->lesson_id = $model->id;
-                        if(!$userLessonModel->save())
-                            $transaction->rollBack();
+                        $user->link("lessons", $model);
                     }
                     $transaction->commit();
                     return $this->redirect(['view', 'id' => $model->id]);

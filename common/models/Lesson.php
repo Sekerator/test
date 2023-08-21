@@ -15,6 +15,7 @@ use yii\db\ActiveRecord;
  * @property int $created_at
  *
  * @property UserLesson[] $userLessons
+ * @property User[] $users
  */
 class Lesson extends \yii\db\ActiveRecord
 {
@@ -77,11 +78,11 @@ class Lesson extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[User]].
+     * Gets query for [[Users]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getUsers()
     {
         return $this->hasMany(User::class, ['id' => 'user_id'])
             ->viaTable('user_lesson', ['lesson_id' => 'id']);
