@@ -75,11 +75,11 @@ class LessonController extends Controller
         try {
             if ($this->request->isPost) {
                 if ($model->load($this->request->post()) && $model->save()) {
+                    // User_lesson links
                     $users = User::find()->all();
                     foreach ($users as $user)
-                    {
                         $user->link("lessons", $model);
-                    }
+
                     $transaction->commit();
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
