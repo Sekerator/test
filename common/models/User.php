@@ -210,4 +210,14 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    /**
+     * Gets query for [[UserLessons]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserLessons()
+    {
+        return $this->hasMany(UserLesson::class, ['lesson_id' => 'id']);
+    }
 }
