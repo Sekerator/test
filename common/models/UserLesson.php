@@ -70,4 +70,12 @@ class UserLesson extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
+
+    public static function courseComplete($user_id)
+    {
+        if(UserLesson::find()->where(['user_id' => $user_id, 'status' => 0])->one())
+            return false;
+
+        return true;
+    }
 }

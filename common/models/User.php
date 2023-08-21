@@ -6,6 +6,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 /**
@@ -23,6 +24,7 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property string $password write-only password
  *
+ * @property UserLesson[] $userLessons
  * @property Lesson[] $lessons
  */
 class User extends ActiveRecord implements IdentityInterface
@@ -220,7 +222,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getUserLessons()
     {
-        return $this->hasMany(UserLesson::class, ['lesson_id' => 'id']);
+        return $this->hasMany(UserLesson::class, ['user_id' => 'id']);
     }
 
     /**
@@ -232,5 +234,10 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Lesson::class, ['id' => 'lesson_id'])
             ->viaTable('user_lesson', ['user_id' => 'id']);
+    }
+
+    public function getLessonMap()
+    {
+        return ArrayHelper::map($this->userLessons, 'lesson_id', 'status');
     }
 }
