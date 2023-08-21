@@ -34,10 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'description:ntext',
             'url:url',
             'created_at:date',
-            [
-                "attribute" => 'user',
-                "value" => $model->user[0]->id
-            ],
         ],
     ]) ?>
 
