@@ -2,6 +2,9 @@
 
 namespace common\models;
 
+use yii\db\ActiveRecord;
+use yii\db\BaseActiveRecord;
+
 /**
  * @property integer $id
  * @property string $title
@@ -10,16 +13,27 @@ namespace common\models;
  * @property integer $status
  * @property integer $priority
  * @property integer $created_at
- * @property integer $updated_at
  */
-class Task
+class Task extends ActiveRecord
 {
     public function rules(): array
     {
         return [
             [['title'], 'required'],
             [['title', 'description'], 'string'],
-            [['due_date', 'status', 'priority', 'created_at', 'updated_at'], 'integer'],
+            [['due_date', 'status', 'priority', 'created_at'], 'integer'],
+        ];
+    }
+
+    public function behaviors(): array
+    {
+        return [
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    BaseActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
+                ],
+            ],
         ];
     }
 
@@ -33,7 +47,6 @@ class Task
             'status' => 'Статус',
             'priority' => 'Приоритет',
             'created_at' => 'Создано',
-            'updated_at' => 'Обновлено',
         ];
     }
 }
