@@ -19,8 +19,7 @@ class m240923_055612_create_task_table extends Migration
             'due_date' => $this->integer(),
             'status' => $this->tinyInteger()->defaultValue(0),
             'priority' => $this->integer()->defaultValue(0),
-            'created_at' => $this->integer(),
-            'updated_at' => $this->integer()
+            'created_at' => $this->integer()
         ]);
     }
 
