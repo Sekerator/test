@@ -16,7 +16,12 @@ use yii\db\BaseActiveRecord;
  */
 class Task extends ActiveRecord
 {
-    public function rules(): array
+    public static function tableName()
+    {
+        return 'task';
+    }
+
+    public function rules()
     {
         return [
             [['title'], 'required'],

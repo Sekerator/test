@@ -3,7 +3,9 @@
 namespace backend\controllers;
 
 use common\models\LoginForm;
+use common\models\Task;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -60,9 +62,16 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
-        return $this->render('index');
+        $dataProvider = new ActiveDataProvider([
+            'query' => Task::find()->orderBy(['title' => SORT_ASC])->orderBy(['priority' => SORT_ASC]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+
+        return $this->render('index', ['dataProvider' => $dataProvider]);
     }
 
     /**
