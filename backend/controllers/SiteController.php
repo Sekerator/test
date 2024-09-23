@@ -8,6 +8,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\Response;
 
@@ -62,16 +63,9 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex(): string
+    public function actionIndex(): \yii\base\Response
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Task::find()->orderBy(['title' => SORT_ASC])->orderBy(['priority' => SORT_ASC]),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
-
-        return $this->render('index', ['dataProvider' => $dataProvider]);
+        return $this->redirect(Url::toRoute(['task/index']));
     }
 
     /**
